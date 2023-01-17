@@ -26,10 +26,10 @@ let persons = [
     }
 ];
 
-// app.get('/info', (request, response) => {
-//     response.send('<p>Phonebook has info for {notes.length} people</p>')
-//     response.send('<p></p>')
-// })
+app.get('/info', (request, response) => {
+    const dateNow = new Date();
+    response.send(`<p>Phonebook has info for ${persons.length} people.</p><p>${dateNow}</p> `)
+})
 
 app.get('/api/persons', (request, response) => {
     response.json(persons);
