@@ -32,7 +32,7 @@ const App = () => {
       if (window.confirm(`${newName} is already added to the phonebook. Do you want to replace the number?`)) {
         const neObject = {name: newName, number: newNumber, id: newName }
         noteService
-          .update(newName, neObject)
+          .update(person.id, neObject)
           .then(() => {
             setPersons(persons.map(person => person.id !== newName ? person: neObject))
             setNewName('')
@@ -57,7 +57,6 @@ const App = () => {
     const nameObject = {
       name: newName,
       number: newNumber,
-      id: newName
     }
     noteService
       .create(nameObject)
@@ -70,6 +69,12 @@ const App = () => {
           setNewMessage('')
         }, 5000)
       
+      })
+      .catch(error => {
+        setNewError(error.response.data.error)
+        setTimeout(() => {
+          setNewError('')
+        }, 5000)
       })
 
           
