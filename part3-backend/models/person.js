@@ -20,7 +20,30 @@ const PersonSchema = new mongoose.Schema({
     minLength: 3,
     required: true
   },
-  number: String,
+  number: {
+    type: String,
+    minLength: 8,
+    required: true,
+    validate: {
+      validator: function(value) {
+        if(value.includes('-')) {
+          const parts = value.split('-')
+          if (parts.length !== 2) {
+            return false
+          }
+          if (parts[0].length !== 2 && parts[0].length !== 3) {
+            return false
+          }
+          if (isNaN(parts[0]) || isNaN(parts[1])) {
+            return false
+          }
+          return true;
+        }
+
+        return (!isNaN(value))
+      }
+    }
+  }
 })
 
 PersonSchema.set('toJSON', {
